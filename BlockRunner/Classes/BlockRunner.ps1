@@ -12,7 +12,7 @@ class BlockRunnerResult {
     [bool] $Online
     [Object] $Result
     [String] $Transport
-    [TimeSpan] $Duration
+    [TimeSpan] $Elapsed
     [System.Exception] $Exception
 }
 
@@ -82,6 +82,7 @@ class BlockRunner {
                 [PSCredential] $Credential
             )
 
+            $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
             $BlockResult.ComputerName = $ComputerName
 
             # Experienced issues passing a script block into a script block so instead we pass
@@ -108,6 +109,8 @@ class BlockRunner {
                     $BlockResult.Exception = $_.Exception
                 }
             }
+            $stopWatch.Stop()
+            $BlockResult.Elapsed = $stopWatch.Elapsed
             $BlockResult
         }
 
