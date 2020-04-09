@@ -28,21 +28,7 @@ class BlockRunnerResult {
     2. Okay...so suppose WinRm isn't open meaning Invoke-Command is a no go.  Want to try to implement
        this?  Base 64 encode scriptblock.  Invoke-CimMethod new process powershell.exe -encodedcommand.
        Why not?
-    3. Change ScriptBlock to an array (and argumentlist as well).  Probably need to give them a
-       New-Block function which will create an object of a scriptblock and an arg list.
-       Then you can get a New-BlockRunner with an array of block runner options.  Then support it
-       foreach ($block in $blocks) { invoke-command -pssession $session -scriptblock $block }.  How
-       should the object that you construct look then?  Not sure.  Result could be an array of objects
-       instead of a single object.
-    4. Implement ThreadJob
-
-    Cool:
-    $block = { (param [string] $Name) Get-Service -Name $Name }
-    $blockChain = New-ScriptBlock -ScriptBlock $block -ArgumentList = 'BITS','WinRm'
-    $block = { [System.Environment]::OSInfo }
-    $blockChain += New-ScriptBlock -ScriptBlock $block
-    $runner = New-ScriptBlockRunner -BlockChain $blockChain -ComputerName $computerList
-    $runner.Run()
+    3. Implement ThreadJob
 #>
 class BlockRunner {
 
