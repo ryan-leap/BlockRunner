@@ -20,10 +20,29 @@ class BlockRunnerResult {
     Class that handles the details of running remote jobs
 
     To do:
+    Rename?  New-ScriptBlock, New-ScriptBlockRunner
     1. Use New-PSSession with appropriate options (instead of invoke-command -computername) so
-       you can take advantage of the various session options (transport, timeouts)
-    2. Add Test-Connection for the different protocols
-    3. Implement ThreadJob
+       you can take advantage of the various session options (transport, timeouts).  Maybe
+       New-BlockRunner should take a session option parameter with the default being what
+       New-SessionOption returns.
+    2. Okay...so suppose WinRm isn't open meaning Invoke-Command is a no go.  Want to try to implement
+       this?  Base 64 encode scriptblock.  Invoke-CimMethod new process powershell.exe -encodedcommand.
+       Why not?
+    3. Change ScriptBlock to an array (and argumentlist as well).  Probably need to give them a
+       New-Block function which will create an object of a scriptblock and an arg list.
+       Then you can get a New-BlockRunner with an array of block runner options.  Then support it
+       foreach ($block in $blocks) { invoke-command -pssession $session -scriptblock $block }.  How
+       should the object that you construct look then?  Not sure.  Result could be an array of objects
+       instead of a single object.
+    4. Implement ThreadJob
+
+    Cool:
+    $block = { (param [string] $Name) Get-Service -Name $Name }
+    $blockChain = New-ScriptBlock -ScriptBlock $block -ArgumentList = 'BITS','WinRm'
+    $block = { [System.Environment]::OSInfo }
+    $blockChain += New-ScriptBlock -ScriptBlock $block
+    $runner = New-ScriptBlockRunner -BlockChain $blockChain -ComputerName $computerList
+    $runner.Run()
 #>
 class BlockRunner {
 
