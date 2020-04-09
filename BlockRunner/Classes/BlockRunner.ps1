@@ -20,11 +20,10 @@ class BlockRunnerResult {
     Class that handles the details of running remote jobs
 
     To do:
-    1. Add timespan (duration)
-    2. Use New-PSSession with appropriate options (instead of invoke-command -computername) so
+    1. Use New-PSSession with appropriate options (instead of invoke-command -computername) so
        you can take advantage of the various session options (transport, timeouts)
-    3. Add Test-Connection for the different protocols
-    4. Implement ThreadJob
+    2. Add Test-Connection for the different protocols
+    3. Implement ThreadJob
 #>
 class BlockRunner {
 

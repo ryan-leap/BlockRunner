@@ -21,8 +21,10 @@ function New-BlockRunner {
     .PARAMETER ThrottleLimit
         This parameter limits the number of jobs running at one time.
     .EXAMPLE
-        PS C:\> <example usage>
-        Explanation of what the example does
+        PS C:\> $block = { param([string] $Name) Get-Service $Name }
+        PS C:\> $runner = New-BlockRunner -ScriptBlock $block -ArgumentList 'BITS'
+        PS C:\> $runner.Run()
+        Runs the script block provided against the (default) local computer
     .INPUTS
         Inputs (if any)
     .OUTPUTS
