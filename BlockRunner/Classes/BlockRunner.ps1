@@ -27,6 +27,8 @@ class BlockRunnerResult {
        New-SessionOption returns.
     2. Okay...so suppose WinRm isn't open meaning Invoke-Command is a no go.  Want to try to implement
        this?  Base 64 encode scriptblock.  Invoke-CimMethod new process powershell.exe -encodedcommand.
+       Figure out a way to run it with 'pwsh.exe' vs 'powershell.exe'.  Let the caller specify or you
+       could look for pwsh.exe first, then powershell or vice versa.
        Why not?
     3. Implement ThreadJob
 #>
