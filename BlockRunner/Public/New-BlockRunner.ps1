@@ -46,7 +46,7 @@ function New-BlockRunner {
 
         [ValidateRange(1,1000)]
         [Parameter(Mandatory=$false)]
-        [int] $ThrottleLimit = 25
+        [int] $ThrottleLimit = 5
     )
     
     begin {
