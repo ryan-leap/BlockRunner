@@ -4,14 +4,14 @@
    process right to bring it properly in scope yet.
    Data type returned by a BlockRunner run
 
-   A PSSession has a transport so that's why I chose that property name
-   - Add FlattenObject() method
+   If you end up adding support for multiple ways of reaching a remote
+   compute then adding a 'transport' property or 'protocol' or something
+   to that affect to the BlockRunnerResult object would be nice.
 #>
 class BlockRunnerResult {
     [string] $ComputerName
-    [bool] $Online
+    [bool] $Available
     [Object] $Result
-    [String] $Transport
     [TimeSpan] $Elapsed
     [System.Exception] $Exception
 }
@@ -102,12 +102,18 @@ class BlockRunner {
             }
             if ($env:COMPUTERNAME -eq $ComputerName) {
                 $splatArgs.Add('EnableNetworkAccess', $true)
-                $BlockResult.Online = $true
+                $BlockResult.Available = $true
             }
             else {
-                # Test-Connection (protocols), $BlockResult.Online = $true or $false
+                $BlockResult.Available = Try {
+                    $null = Test-WSMan -ComputerName $ComputerName -ErrorAction Stop
+                    $true
+                }
+                Catch {
+                    $false
+                }
             }
-            if ($BlockResult.Online) {
+            if ($BlockResult.Available) {
                 Try {
                     $BlockResult.Result = Invoke-Command @splatArgs -ErrorAction Stop
                 }
