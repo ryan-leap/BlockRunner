@@ -30,7 +30,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) Ryan Leap. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Simplifies running PoweShell code against a list of computers'
+Description = 'Simplifies running PowerShell code against a list of computers'
 
 # Minimum version of the PowerShell engine required by this module
 # PowerShellVersion = ''
