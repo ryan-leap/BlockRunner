@@ -1,7 +1,7 @@
 function New-BlockRunner {
     <#
     .SYNOPSIS
-        Creates a script block runner.  A script block runner simplifies running PoweShell code
+        Creates a script block runner.  A script block runner simplifies running PowerShell code
         against a list of computers.
     .DESCRIPTION
         Prepares an object that can run a block of PowerShell code against a list of computers. The block
@@ -52,7 +52,6 @@ function New-BlockRunner {
     )
     
     begin {
-        . "$PSScriptRoot\..\Classes\BlockRunner.ps1"
     }
     
     process {

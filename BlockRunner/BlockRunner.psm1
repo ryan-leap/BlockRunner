@@ -4,6 +4,10 @@
 # dot sourcing Module Layout
 #
 
+# Dot sources in classes
+. .\Classes\BlockRunnerResult.ps1
+. .\Classes\BlockRunner.ps1
+
 # Dot source public/private functions
 $publicFunctionsPath = Join-Path -Path $PSScriptRoot -ChildPath 'Public/*.ps1'
 $privateFunctionsPath = Join-Path -Path $PSScriptRoot -ChildPath 'Private/*.ps1'

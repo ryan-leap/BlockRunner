@@ -1,20 +1,4 @@
 
-<#
-   Want this class to be in its own file but haven't gotten the build
-   process right to bring it properly in scope yet.
-   Data type returned by a BlockRunner run
-
-   If you end up adding support for multiple ways of reaching a remote
-   compute then adding a 'transport' property or 'protocol' or something
-   to that affect to the BlockRunnerResult object would be nice.
-#>
-class BlockRunnerResult {
-    [string] $ComputerName
-    [bool] $Available
-    [Object] $Result
-    [TimeSpan] $Elapsed
-    [System.Exception] $Exception
-}
 
 <#
     Class that handles the details of running remote jobs
