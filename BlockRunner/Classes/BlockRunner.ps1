@@ -3,18 +3,12 @@
 <#
     Class that handles the details of running remote jobs
 
-    To do:
-    Rename?  New-ScriptBlock, New-ScriptBlockRunner
-    1. Use New-PSSession with appropriate options (instead of invoke-command -computername) so
-       you can take advantage of the various session options (transport, timeouts).  Maybe
-       New-BlockRunner should take a session option parameter with the default being what
-       New-SessionOption returns.
-    2. Okay...so suppose WinRm isn't open meaning Invoke-Command is a no go.  Want to try to implement
-       this?  Base 64 encode scriptblock.  Invoke-CimMethod new process powershell.exe -encodedcommand.
-       Figure out a way to run it with 'pwsh.exe' vs 'powershell.exe'.  Let the caller specify or you
-       could look for pwsh.exe first, then powershell or vice versa.
-       Why not?
+    1. In New-BlockRunner have a param which takes a SessionOption
+    2. Use sessions for invoke-command
     3. Implement ThreadJob
+    4. Should you: Make ThreadJob a dependency?
+    5. Should you: Have an -ExecutionOption param with these options:
+       Batch | Job | ThreadJob | Negotiate (Default of Negotiate)
 #>
 class BlockRunner {
 
