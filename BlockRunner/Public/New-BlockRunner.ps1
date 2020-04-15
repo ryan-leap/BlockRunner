@@ -25,12 +25,10 @@ function New-BlockRunner {
         PS C:\> $runner = New-BlockRunner -ScriptBlock $block -ArgumentList 'BITS'
         PS C:\> $runner.Run()
         Runs the script block provided against the (default) local computer
-    .INPUTS
-        Inputs (if any)
     .OUTPUTS
-        Output (if any)
-    .NOTES
-        General notes
+        BlockRunnerResult
+        This function returns objects representing a result from each computer including the result of the
+        script block provided (if any data provided)
     #>
     [CmdletBinding()]
     param (
