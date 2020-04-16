@@ -9,6 +9,13 @@
     4. Should you: Make ThreadJob a dependency?
     5. Should you: Have an -ExecutionOption param with these options:
        Batch | Job | ThreadJob | Negotiate (Default of Negotiate)
+       Thinking instead that the Run() method should have the option.
+       Maybe an Enum.  Either way, do it if you can validate.
+    6. For -Verbose and -Debug should New-BlockRunner set properties for
+       the BlockRunner instantiation that set it to whatever option was used
+       when New-BlockRunner was called?  Probably not.  I guess I'd like there
+       to be a way to set a property though for Verbose and Debug for the Run method
+       without using the method signature, but rather for the class.
 #>
 class BlockRunner {
 
@@ -27,7 +34,6 @@ class BlockRunner {
         $this.ArgumentList = $ArgumentList
         $this.Credential = $Credential
         $this.ThrottleLimit = $ThrottleLimit
-
     }
 
     # Utility to split computer list according to throttle size
@@ -52,6 +58,7 @@ class BlockRunner {
 
     # Method which will run scriptblock provided against computer list
     [Object[]] Run() {
+        Write-Debug "[BlockRunner] [Run()] method."
         $blockRunnerResults = [System.Collections.ArrayList]::new()
         if ($null -eq $this.ComputerName) {
             return $null
@@ -129,15 +136,12 @@ class BlockRunner {
 
     [Object[]] Run([switch] $Verbose)
     {
-        [System.Management.Automation.ActionPreference] $verboseState = $Global:VerbosePreference
+        # Not sure it is appropriate to set the script scope for this...will it enable
+        # verbose for scripts calling this script?
         if ($Verbose) {
-          $Global:VerbosePreference = 'Continue'
+          $Script:VerbosePreference = 'Continue'
         }
-        $results = $this.Run()
-        if ($Verbose) {
-          $Global:VerbosePreference = $verboseState
-        }
-        return $results
+        return $this.Run()
     }
 
 } # End Class

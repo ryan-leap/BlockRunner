@@ -50,6 +50,9 @@ function New-BlockRunner {
     )
     
     begin {
+        # Not write, but until I fix it...
+        . .\Classes\BlockRunnerResult.ps1
+        . .\Classes\BlockRunner.ps1
     }
     
     process {
